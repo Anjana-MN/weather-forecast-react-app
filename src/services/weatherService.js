@@ -21,17 +21,15 @@ const formatCurrentWeather = (weatherInfo) =>{
         latitude,longitude,country,cityName }
 }
 
-const formatForecastWeather = (weatherInfo) => {
-    const{ data:{dateText,temperature,weatherIcon}} = weatherInfo
-    // data.map({ dateText,temperature,weatherIcon }) = weatherInfo
-
-    // return{
-    //     dateText,
-    //     temperature,
-    //     weatherIcon
-    // }
-    console.log("weatherInfo:",weatherInfo);
-    return weatherInfo;
+const formatForecastWeather = (data) => {
+    data = data.map((d)=>{ 
+        return{
+        dateText:d.dateText,
+        temperature:d.temperature,
+        weatherIcon:d.weatherIcon
+        };
+     });
+    return data;
 }
 
 const getFormattedWeatherData = async (searchParams) => {

@@ -6,24 +6,18 @@ import TimeAndLocation from './components/TimeAndLocation';
 import TemperatureAndDetails from './components/TemperatureAndDetails';
 import Forecast from './components/Forecast';
 import getFormattedWeatherData from './services/weatherService';
-import getForecastWeather from './services/forecastService';
 import { useEffect, useState } from 'react';
 
 function App() {
-  // const [ endpoint, setEndpoint ] = useState( "data" ); 
   const [ query, setQuery ] = useState({ city:'sydney',count:'5'});
   const [ units, setUnits ] = useState("celsius");
   const [ weather, setWeather ] = useState(null); 
-  const [ forecast, setForecast ] = useState(null); 
   
   useEffect(()=>{
     const fetchWeather = async() => {
-      await getFormattedWeatherData({...query}).then(
+      await getFormattedWeatherData({...query,units}).then(
         (data) => {
           setWeather(data);
-          console.log("data:",data);
-          console.log("weatherInApp:",weather);
-          console.log("dataMap:", weather.data)
         });
     };
 
@@ -40,8 +34,8 @@ function App() {
       <div>
     <TimeAndLocation weather={weather}/>
     <TemperatureAndDetails weather={weather}/>
-    <Forecast title="Today's Forecast"/>
-    <Forecast title="Daily Forecast"/>
+    <Forecast title="Today's Forecast" items={weather.data}/>
+    {/* <Forecast title="Daily Forecast" weather+weather  /> */}
     </div>
     )}
   </div>

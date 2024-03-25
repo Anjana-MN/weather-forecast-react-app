@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Forecast({title}) {
+function Forecast({title,items}) {
   return (
     <div>
     <div className="flex items-center justify-start mt-6">
@@ -8,13 +8,13 @@ function Forecast({title}) {
     </div>
     <hr className="my-2"/>
     <div className="flex flex-row items-center justify-between text-white">
-        {/* {data.map(d=>( */}
+        {items.map(item=>(
         <div className="flex flex-col items-center justify-center">
-            <p className="font-light text-sm">4:00 PM</p>
+            <p className="font-light text-sm">{item.dateText}</p>
             <img src="http://openweathermap.org/img/wn/01d@2x.png" className="w-12 my-1" alt="" />
-            <p className="font-medium">22&deg;</p>
+            <p className="font-medium">{item.temperature}&deg;</p>
         </div>
-         {/* ))} */}
+        ))}
 
     </div>
     </div>
