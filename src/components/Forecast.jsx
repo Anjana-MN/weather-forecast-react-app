@@ -13,7 +13,7 @@ function Forecast({title,items}) {
         <div className="flex flex-col items-center justify-center">
             <p className="font-light text-sm">{item.dateText}</p>
             <img src={iconURLFromCode(item.weatherIcon)} className="w-12 my-1" alt="" />
-            <p className="font-medium">{item.temperature}&deg;</p>
+            <p className="font-medium">{item.temperature.toFixed()}&deg;</p>
         </div>
         ))}
 
