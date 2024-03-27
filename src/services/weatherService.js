@@ -21,25 +21,17 @@ const formatCurrentWeather = (weatherInfo) =>{
         latitude,longitude,country,cityName }
 }
 
-const formatForecastWeather = (data) => {
-    data = data.map((d)=>{ 
-        return{
-        dateText:d.dateText,
-        temperature:d.temperature,
-        weatherIcon:d.weatherIcon
-        };
-     });
-    return data;
-}
-
 const getFormattedWeatherData = async (searchParams) => {
     const formattedCurrentWeather = await getWeatherData("data",searchParams)
     .then(formatCurrentWeather)
 
     const forecastWeather = await getWeatherData("temperaturelist",searchParams);
     console.log("forecastWeather",forecastWeather);
+
+    const dailyForecastWetaher = await getWeatherData("daily",searchParams);
+    console.log("Daily Forecast:",dailyForecastWetaher);
     
-    return {...formattedCurrentWeather, ...forecastWeather};
+    return {...formattedCurrentWeather, ...forecastWeather, ...dailyForecastWetaher};
 }
 
 const iconURLFromCode = (code) => `http://openweathermap.org/img/wn/${code}@2x.png`
