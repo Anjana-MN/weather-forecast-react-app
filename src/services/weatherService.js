@@ -11,21 +11,20 @@ const getWeatherData = async (infoType,searchParams) =>{
 const formatCurrentWeather = (weatherInfo) =>{
     const{
         weatherData:{ temperature,description,additionalDescription,feelsLike,
-            minTemp,maxTemp,humidity,windSpeed,weatherDetails,weatherIcon },
-            sunRise,sunSet,country,cityName,
-            coordinates:{ latitude,longitude }
+            minTemp,maxTemp,humidity,windSpeed,weatherDetails,weatherIcon,dateText,day,time },
+            sunRise,sunSet,country,cityName
     } = weatherInfo
 
     return { temperature,description,additionalDescription,feelsLike,
         minTemp,maxTemp,humidity,windSpeed,weatherDetails,weatherIcon,sunRise,sunSet,
-        latitude,longitude,country,cityName }
+        country,cityName,dateText,day,time }
 }
 
 const getFormattedWeatherData = async (searchParams) => {
-    const formattedCurrentWeather = await getWeatherData("data",searchParams)
+    const formattedCurrentWeather = await getWeatherData("current",searchParams)
     .then(formatCurrentWeather)
 
-    const forecastWeather = await getWeatherData("temperaturelist",searchParams);
+    const forecastWeather = await getWeatherData("timely",searchParams);
     console.log("forecastWeather",forecastWeather);
 
     const dailyForecastWetaher = await getWeatherData("daily",searchParams);

@@ -8,7 +8,7 @@ import getFormattedWeatherData from './services/weatherService';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [ query, setQuery ] = useState({ city:'boston'});
+  const [ query, setQuery ] = useState({ city:'bangalore'});
   const [ units, setUnits ] = useState("celsius");
   const [ weather, setWeather ] = useState(null); 
   
@@ -23,7 +23,7 @@ function App() {
 
     fetchWeather();
   }, [query, units, weather]);
-  
+
   return (
   <div className="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit 
   shadow-xl shadow-gray-400">
@@ -34,7 +34,7 @@ function App() {
       <div>
     <TimeAndLocation weather={weather}/>
     <TemperatureAndDetails weather={weather}/>
-    <Forecast title="Today's Forecast" items={weather.data}/>
+    <Forecast title="Timely's Forecast" items={weather.data.timeWindowResponses}/>
     <Forecast title="Daily Forecast" items={weather.dailyForecast}  />
     </div>
     )}
