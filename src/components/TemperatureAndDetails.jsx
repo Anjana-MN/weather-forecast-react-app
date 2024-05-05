@@ -2,7 +2,7 @@ import React from 'react'
 import { UilArrowUp, UilArrowDown, UilTemperature, UilTear, UilWind, UilSun, UilSunset } from "@iconscout/react-unicons";
 import { iconURLFromCode } from '../services/weatherService';
 
-function TemperatureAndDetails({weather: {temperature,description,additionalDescription,feelsLike,
+function TemperatureAndDetails({weather: {temperature,feelsLike,
     minTemp,maxTemp,humidity,windSpeed,weatherDetails,weatherIcon,sunRise,sunSet}}) {
   return (
     <div>
@@ -11,7 +11,7 @@ function TemperatureAndDetails({weather: {temperature,description,additionalDesc
     </div>
     <div className="flex flex-row items-center justify-between text-white py-3">
         <img src={iconURLFromCode(weatherIcon)} alt="" className="w-20"/>
-        <p className="text-5xl">{temperature}&deg;</p>
+        <p className="text-5xl" data-testid = "temp">{temperature}&deg;</p>
         <div className="flex flex-col space-y-2">
             <div className="flex font-light text-sm items-center justify-center">
                 <UilTemperature size={18} className="mr-1"/>

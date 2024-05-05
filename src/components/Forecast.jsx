@@ -12,7 +12,7 @@ function Forecast({title,items}) {
     <div className="flex flex-row items-center justify-between text-white">
         {items.map(item=>(
         <div className="flex flex-col items-center justify-center">
-            <p className="font-light text-sm">{item.key}</p>
+            <p className="font-light text-sm" data-testid="forecast-key">{item.key}</p>
             <img src={iconURLFromCode(item.weatherIcon)} className="w-12 my-1" alt="" />
             <p className="font-medium">{item.temperature.toFixed()}&deg;</p>
         </div>

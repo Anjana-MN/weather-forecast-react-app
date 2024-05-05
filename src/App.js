@@ -34,8 +34,8 @@ function App() {
       <div>
     <TimeAndLocation weather={weather}/>
     <TemperatureAndDetails weather={weather}/>
-    <Forecast title="Timely's Forecast" items={weather.data.timeWindowResponses}/>
-    <Forecast title="Daily Forecast" items={weather.dailyForecast}  />
+    <Forecast title="Timely Forecast" data-testid = "timelyforecast" items={weather.data.timeWindowResponses}/>
+    <Forecast title="Daily Forecast" data-testid = "dailyforecast" items={weather.dailyForecast}  />
     </div>
     )}
   </div>
