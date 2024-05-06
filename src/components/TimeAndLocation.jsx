@@ -3,7 +3,7 @@ import React from 'react'
 function TimeAndLocation({weather: {cityName,country,dateText,day,time}}) {
   return <div>
     <div className="flex items-center justify-center my-6">
-        <p className="text-white text-xl font-extralight">
+        <p className="text-white text-xl font-extralight" data-testid = "timeAndLocation">
             {`${day}, ${dateText}`} | Local time: {time}
         </p>
     </div>

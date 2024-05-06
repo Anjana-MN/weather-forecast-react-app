@@ -4,7 +4,14 @@ const BASE_URL= "http://localhost:8080/api/weather/forecast";
 
 const getWeatherData = async (infoType,searchParams) =>{
     const url = new URL(BASE_URL+"/"+infoType);
+    const fetchedResponse = ""
     url.search=new URLSearchParams({...searchParams});
+    // try{
+    // fetchedResponse = await fetch(url).then((res)=>res.json());
+    // }catch(error){
+    //     console.error(error)
+    // }
+    // return fetchedResponse;
     return fetch(url).then((res)=>res.json());
 }
 
