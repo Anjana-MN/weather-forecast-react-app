@@ -1,3 +1,12 @@
+# Weather App
+A weather prediction app that provides day wise and hour wise prediction for various cities in celsius and fahrenheit.\
+The weather data is fetched from api.openweathermap.org.
+
+Screenshots:\
+![AltText](https://github.com/Anjana-MN/weather-forecast-react-app/tree/master/src/components/assets/weather_app_screenshot_1.JPG)\
+![AltText](https://github.com/Anjana-MN/weather-forecast-react-app/tree/master/src/components/assets/weather_app_screenshot_2.JPG)\
+![AltText](https://github.com/Anjana-MN/weather-forecast-react-app/tree/master/src/components/assets/weather_app_screenshot_3.JPG)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
