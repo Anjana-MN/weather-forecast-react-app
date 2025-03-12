@@ -1,18 +1,17 @@
+import { getLocalStorage,setLocalStorage } from "../util/commonUtil";
 
-const BASE_URL= "http://localhost:8080/api/weather/forecast";
-
+const BASE_URL= "http://localhost:8081/api/weather/forecast";
 
 const getWeatherData = async (infoType,searchParams) =>{
     const url = new URL(BASE_URL+"/"+infoType);
-    const fetchedResponse = ""
+    let fetchedResponse = ""
     url.search=new URLSearchParams({...searchParams});
-    // try{
-    // fetchedResponse = await fetch(url).then((res)=>res.json());
-    // }catch(error){
-    //     console.error(error)
-    // }
-    // return fetchedResponse;
-    return fetch(url).then((res)=>res.json());
+    fetchedResponse = await fetch(url).then((res)=>res.json()).catch(e => { return 'error'});
+    if(fetchedResponse === 'error'){
+        alert(fetchedResponse.error.message)
+        console.error(fetchedResponse.error)
+    }
+    return fetchedResponse;
 }
 
 const formatCurrentWeather = (weatherInfo) =>{
@@ -28,15 +27,41 @@ const formatCurrentWeather = (weatherInfo) =>{
 }
 
 const getFormattedWeatherData = async (searchParams) => {
-    const formattedCurrentWeather = await getWeatherData("current",searchParams)
-    .then(formatCurrentWeather)
-
-    const forecastWeather = await getWeatherData("timely",searchParams);
-    console.log("forecastWeather",forecastWeather);
-
-    const dailyForecastWetaher = await getWeatherData("daily",searchParams);
-    console.log("Daily Forecast:",dailyForecastWetaher);
     
+    let key = searchParams.city+searchParams.units+"current";
+    const formattedCurrentWeather = await getWeatherData("current",searchParams)
+    .then(weatherData => {
+        let data = formatCurrentWeather(weatherData);
+        setLocalStorage(data, key);
+        return data;
+    })
+    .catch(e => {
+        let data = getLocalStorage(key);
+        return data;
+     });
+
+
+    key = searchParams.city+searchParams.units+"timely";
+    const forecastWeather = await getWeatherData("timely",searchParams)
+    .then(data=> 
+        {
+            setLocalStorage(data, key);
+            return data;
+        })
+    .catch(e => {
+        return getLocalStorage(key);
+     });
+
+    key = searchParams.city+searchParams.units+"daily";
+    const dailyForecastWetaher = await getWeatherData("daily",searchParams)
+    .then(data=> 
+        {
+            setLocalStorage(data, key);
+            return data;
+        })
+    .catch(e => {
+        return getLocalStorage(key);
+     });    
     return {...formattedCurrentWeather, ...forecastWeather, ...dailyForecastWetaher};
 }
 

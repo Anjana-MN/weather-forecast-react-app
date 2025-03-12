@@ -33,13 +33,13 @@ function Inputs({ setQuery, units, setUnits }) {
         <button 
         name="celsius"
         className="text-xl text-white font-light transition ease-out hover:scale-125"
-        onClick = {handleUnitsChange}
+    onClick = {handleUnitsChange}
         >&deg;C</button>
         <p className="text-xl text-white mx-1">|</p>
         <button 
         name="fahrenheit"
         className="text-xl text-white font-light transition ease-out hover:scale-125"
-        onClick = {handleUnitsChange}
+    onClick = {handleUnitsChange}
         >&deg;F</button>
      </div>
   </div>

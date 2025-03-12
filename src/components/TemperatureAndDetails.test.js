@@ -1,6 +1,6 @@
 import { render,screen } from '@testing-library/react';
 import TemperatureAndDetails from './TemperatureAndDetails';
-import tempDetails from './weatherResponse';
+import tempDetails from '../weatherResponse';
 
 
 
