@@ -4,9 +4,13 @@ const BASE_URL= "http://localhost:8081/api/weather/forecast";
 
 const getWeatherData = async (infoType,searchParams) =>{
     const url = new URL(BASE_URL+"/"+infoType);
-    let fetchedResponse = ""
+    let fetchedResponse = null;
     url.search=new URLSearchParams({...searchParams});
     fetchedResponse = await fetch(url).then((res)=>res.json()).catch(e => { return 'error'});
+    // let serviceDown = false;
+    // if(infoType === 'timely' && fetchedResponse.timeWindowResponses.length === 0){
+    //     serviceDown=true;
+    // }
     if(fetchedResponse === 'error'){
         alert(fetchedResponse.error.message)
         console.error(fetchedResponse.error)
@@ -31,36 +35,55 @@ const getFormattedWeatherData = async (searchParams) => {
     let key = searchParams.city+searchParams.units+"current";
     const formattedCurrentWeather = await getWeatherData("current",searchParams)
     .then(weatherData => {
-        let data = formatCurrentWeather(weatherData);
-        setLocalStorage(data, key);
-        return data;
+        if(weatherData.cityName == null){
+            console.log('in empty list')
+            return getLocalStorage(key,"current");
+        } else{
+            let data = formatCurrentWeather(weatherData);
+            setLocalStorage(data, key);
+            return data;
+        }
     })
     .catch(e => {
-        let data = getLocalStorage(key);
+        let data = getLocalStorage(key,"current");
         return data;
      });
 
 
     key = searchParams.city+searchParams.units+"timely";
     const forecastWeather = await getWeatherData("timely",searchParams)
+    .then(response => response.json())
     .then(data=> 
         {
-            setLocalStorage(data, key);
-            return data;
+            console.log('time length is ', data.timeWindowResponses)
+            if(data.timeWindowResponses.length == 0){
+                console.log('in empty list')
+                return getLocalStorage(key,"timely");
+            } else{
+                setLocalStorage(data, key);
+                return data;
+            }
+           
         })
     .catch(e => {
-        return getLocalStorage(key);
+        return getLocalStorage(key,"timely");
      });
 
     key = searchParams.city+searchParams.units+"daily";
     const dailyForecastWetaher = await getWeatherData("daily",searchParams)
     .then(data=> 
         {
-            setLocalStorage(data, key);
-            return data;
+            console.log('day length is ', data.dailyForecast.length)
+            if(data.dailyForecast.length == 0){
+                console.log('in empty list')
+                return getLocalStorage(key,"daily");
+            } else{
+                setLocalStorage(data, key);
+                return data;
+            }
         })
     .catch(e => {
-        return getLocalStorage(key);
+        return getLocalStorage(key,"daily");
      });    
     return {...formattedCurrentWeather, ...forecastWeather, ...dailyForecastWetaher};
 }

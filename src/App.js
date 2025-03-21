@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
-  const [ query, setQuery ] = useState({ city:'bangalore'});
+  const [ query, setQuery ] = useState({ city:'bangalore' });
   const [ units, setUnits ] = useState("celsius");
   const [ weather, setWeather ] = useState(null); 
   
@@ -17,7 +17,8 @@ function App() {
     await getFormattedWeatherData({...query,units}).then(
       (data) => {
         if(data.error){
-          toast('Unable to fetch data for ' + query.city + " in " + units+ '. Please try another city/units or wait till server is up.', {
+          toast('Unable to fetch data for ' + query.city + " in " + units +'. Please try another city', {
+          // toast(data.error,{
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,

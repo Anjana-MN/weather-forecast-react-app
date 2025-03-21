@@ -1,13 +1,19 @@
-export const getLocalStorage = async (key) => {
+export const getLocalStorage = async (key,infoType) => {
     let data = localStorage.getItem(key);
     if(data === undefined || !data){
-        return {error: 'Unable to fetch current weather data'};
+        return {error: 'Service is down. Please try another city.'};
     }
     try{
-        return JSON.parse(data);
+        let response = JSON.parse(data);
+        if((infoType === "timely" && response.timeWindowResponses.length === 0) ||
+        (infoType === "daily" && response.dailyForecast.length === 0) || 
+        (infoType === "current" && response.cityName === null)) {
+            return {error: 'Service is down. Please try another city.'};
+        }
+        
     }
     catch(e){
-        return {error: 'Unable to fetch current weather data'};
+        return {error: 'Error while processing'};
     }
 }
 
