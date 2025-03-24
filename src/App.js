@@ -29,6 +29,7 @@ function App() {
             theme: "light"});
         } else{
           setWeather(data);
+          console.log(weather);
           toast('Fetched data successfully for ' + query.city, {
             position: "top-right",
             autoClose: 5000,

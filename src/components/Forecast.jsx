@@ -1,5 +1,6 @@
 import React from 'react'
 import { iconURLFromCode } from '../services/weatherService';
+import PropTypes from 'prop-types';
 
 function Forecast({title,items}) {
   return (
@@ -12,8 +13,8 @@ function Forecast({title,items}) {
         {items.map(item=>(
         <div className="flex flex-col items-center justify-center">
             <p className="font-light text-sm" data-testid="forecast-key">{item.key}</p>
-            <img src={iconURLFromCode(item.weatherIcon)} className="w-12 my-1" alt="" />
-            <p className="font-medium">{item.temperature.toFixed()}&deg;</p>
+            <img src={iconURLFromCode(item.weatherIcon)} className="w-12 my-1" alt="Weather Icon" />
+            <p className="font-medium">{item.temperature ? item.temperature.toFixed() : "N/A"}&deg;</p>
         </div>
         ))}
 
@@ -22,4 +23,19 @@ function Forecast({title,items}) {
   );
 }
 
-export default Forecast
+Forecast.propTypes = {
+  title: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    weatherIcon: PropTypes.string.isRequired,
+    temperature: PropTypes.number.isRequired,
+  })).isRequired,
+};
+
+Forecast.defaultProps = {
+  title: 'Forecast',
+  items: [],
+};
+
+
+export default Forecast;
