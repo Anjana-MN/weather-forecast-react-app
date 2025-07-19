@@ -1,0 +1,50 @@
+name: Deploy React App to EC2 (No Nginx)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Copy Build to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          source: "build/"
+          target: "/home/${{ secrets.EC2_USER }}/app/build"
+
+      - name: Start/Restart serve using PM2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            cd ~/app
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2 serve
+            fi
+            pm2 delete react-app || true
+            pm2 start serve --name "react-app" -- -s build -l 3000
+            pm2 save
