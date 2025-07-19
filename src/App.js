@@ -13,6 +13,7 @@ function App() {
   const [ units, setUnits ] = useState("celsius");
   const [ weather, setWeather ] = useState(null); 
   
+  useEffect(()=>{
   const fetchWeather = async() => {
     await getFormattedWeatherData({...query,units}).then(
       (data) => {
@@ -29,7 +30,6 @@ function App() {
             theme: "light"});
         } else{
           setWeather(data);
-          console.log(weather);
           toast('Fetched data successfully for ' + query.city, {
             position: "top-right",
             autoClose: 5000,
@@ -41,11 +41,9 @@ function App() {
             theme: "light"});
         }
       });
-  };
-
-  useEffect(()=>{
-    fetchWeather();
-  }, [query,units]);
+  };  
+  fetchWeather();
+}, [query,units]);
 
 
   return (
