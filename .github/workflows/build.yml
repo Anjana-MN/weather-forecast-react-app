@@ -30,7 +30,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.EC2_PORT }}
           source: "build/"
-          target: "/home/${{ secrets.EC2_USER }}/app/build"
+          target: "/home/${{ secrets.EC2_USER }}/app"
 
       - name: Start/Restart serve using PM2
         uses: appleboy/ssh-action@v1.0.0
@@ -45,5 +45,5 @@ jobs:
               /usr/bin/npm install -g pm2 serve
             fi
             /usr/bin/pm2 delete react-app || true
-            /usr/bin/pm2 start serve --name "react-app" -- -s build -l 3000
+            /usr/bin/pm2 start "npx serve -s build -l 3000" --name react-app
             /usr/bin/pm2 save
