@@ -12,12 +12,9 @@ const getWeatherData = async (infoType,searchParams) =>{
             throw new Error('Error while fetching response')
         } 
         const responseBody = await response.text();
-            
-        const jsonResponse = JSON.parse(responseBody); // Parse the text to JSON manually
-        
-        // Now you can check for a specific field in the JSON
+        const jsonResponse = JSON.parse(responseBody);
         if (jsonResponse) {
-            return jsonResponse; // Field exists, return parsed data
+            return jsonResponse;
         } else {
             throw new Error('Error while fetching response')
         }
@@ -64,7 +61,7 @@ const getFormattedWeatherData = async (searchParams) => {
     const timelyForecastWeather = await getWeatherData("timely",searchParams)
     .then(data=> 
         {
-            if(data.data.timeWindowResponses.length == 0){
+            if(data.data.timeWindowResponses.length === 0){
                 console.log('empty list due to circuit breaker implementation')
                 return getLocalStorage(key,"timely");
             } else{
@@ -82,7 +79,7 @@ const getFormattedWeatherData = async (searchParams) => {
     const dailyForecastWeather = await getWeatherData("daily",searchParams)
     .then(data=> 
         {
-            if(data.dailyForecast.length == 0){
+            if(data.dailyForecast.length === 0){
                 console.log('empty list due to circuit breaker implementation')
                 return getLocalStorage(key,"daily");
             } else{
