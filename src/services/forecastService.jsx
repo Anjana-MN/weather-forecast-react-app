@@ -1,6 +1,6 @@
 import { getLocalStorage, setLocalStorage } from "../util/commonUtil";
 
-const BASE_URL= "http://localhost:8081/api/weather/forecast";
+const BASE_URL= "http://ec2-35-175-144-213.compute-1.amazonaws.com:8080/api/weather/forecast";
 
 const getWeatherData = async (infoType,searchParams) =>{
     const url = new URL(BASE_URL+"/"+infoType);
