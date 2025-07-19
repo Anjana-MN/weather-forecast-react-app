@@ -1,5 +1,4 @@
-name: Deploy React App to EC2 (No Nginx)
-
+name: Deploy React App to EC2
 on:
   push:
     branches:
